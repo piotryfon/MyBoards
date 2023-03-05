@@ -24,6 +24,21 @@ namespace MyBoards.Entities
             //tworzenie złożonego klucza
             //modelBuilder.Entity<User>()
             //     .HasKey(x => new { x.Email, x.LastName });
+
+            modelBuilder.Entity<WorkItem>()
+                .Property(x => x.State).IsRequired();
+
+            modelBuilder.Entity<WorkItem>(builder =>
+            {
+                builder.Property(wi => wi.IterationPath).HasColumnName("Iteration_Path");
+                builder.Property(wi => wi.Area).HasColumnType("varchar(200)");
+                builder.Property(wi => wi.Efford).HasColumnType("decimal(5,2)");
+                builder.Property(wi => wi.EndDate).HasPrecision(3); 
+                builder.Property(wi => wi.Activity).HasMaxLength(200);
+                builder.Property(wi => wi.RemaningWork).HasPrecision(14,2);
+            });
+              
+
         }
     }
 }
