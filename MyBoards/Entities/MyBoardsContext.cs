@@ -18,5 +18,12 @@ namespace MyBoards.Entities
         //{
         //    optionsBuilder.UseSqlServer("Data Source=(localdb)\\mssqllocaldb;DataBase=MyBoardsDb;Trusted_Connection=True");
         //}
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            //tworzenie złożonego klucza
+            //modelBuilder.Entity<User>()
+            //     .HasKey(x => new { x.Email, x.LastName });
+        }
     }
 }
