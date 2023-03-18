@@ -36,9 +36,14 @@ namespace MyBoards.Entities
                 builder.Property(wi => wi.EndDate).HasPrecision(3); 
                 builder.Property(wi => wi.Activity).HasMaxLength(200);
                 builder.Property(wi => wi.RemaningWork).HasPrecision(14,2);
+                builder.Property(wi => wi.Priority).HasDefaultValue(1);
             });
-              
 
+            modelBuilder.Entity<Comment>(builder =>
+            {
+                builder.Property(x => x.CreatedDate).HasDefaultValueSql("getutcdate()");
+                builder.Property(x => x.UpdatedDate).ValueGeneratedOnUpdate();  
+            });
         }
     }
 }
