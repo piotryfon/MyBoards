@@ -37,6 +37,8 @@ namespace MyBoards.Entities
                 builder.Property(wi => wi.Activity).HasMaxLength(200);
                 builder.Property(wi => wi.RemaningWork).HasPrecision(14,2);
                 builder.Property(wi => wi.Priority).HasDefaultValue(1);
+                // workitem ma wiele kometarzy
+                builder.HasMany(prop => prop.Comments).WithOne(comment => comment.WorkItem).HasForeignKey(comment => comment.WorkItemId);
             });
 
             modelBuilder.Entity<Comment>(builder =>
