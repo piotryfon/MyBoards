@@ -40,6 +40,8 @@ namespace MyBoards.Entities
                 // workitem ma wiele kometarzy
                 builder.HasMany(prop => prop.Comments).WithOne(comment => comment.WorkItem).HasForeignKey(comment => comment.WorkItemId);
                 builder.HasOne(w => w.Author).WithMany(u => u.WorkItems).HasForeignKey(w => w.AuthorId);
+                // wiele do wiely
+                builder.HasMany(workitem => workitem.Tags).WithMany(tag => tag.WorkItems);
             });
 
             modelBuilder.Entity<Comment>(builder =>

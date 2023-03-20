@@ -29,6 +29,7 @@ namespace MyBoards.Entities
         public List<Comment> Comments { get; set; } = new List<Comment>(); // domyślnie pusta lista
         public User Author { get; set; }
         public Guid AuthorId { get; set; }
+        public List<Tag> Tags { get; set; }
 
     }
 }
