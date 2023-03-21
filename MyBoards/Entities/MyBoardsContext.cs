@@ -13,6 +13,8 @@ namespace MyBoards.Entities
         public DbSet<Comment> Comments { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Tag> Tags { get; set; }
+        public DbSet<WorkItemState> States { get; set; }
+
 
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //{
@@ -25,11 +27,14 @@ namespace MyBoards.Entities
             //modelBuilder.Entity<User>()
             //     .HasKey(x => new { x.Email, x.LastName });
 
-            modelBuilder.Entity<WorkItem>()
-                .Property(x => x.State).IsRequired();
+            //modelBuilder.Entity<WorkItem>()
+            //    .Property(x => x.State).IsRequired();
+            modelBuilder.Entity<WorkItemState>().Property(s => s.Value).IsRequired().HasMaxLength(50);
 
             modelBuilder.Entity<WorkItem>(builder =>
             {
+                builder.HasOne(w => w.State).WithMany().HasForeignKey(w => w.StateId);
+
                 builder.Property(wi => wi.IterationPath).HasColumnName("Iteration_Path");
                 builder.Property(wi => wi.Area).HasColumnType("varchar(200)");
                 builder.Property(wi => wi.Efford).HasColumnType("decimal(5,2)");
@@ -40,8 +45,8 @@ namespace MyBoards.Entities
                 // workitem ma wiele kometarzy
                 builder.HasMany(prop => prop.Comments).WithOne(comment => comment.WorkItem).HasForeignKey(comment => comment.WorkItemId);
                 builder.HasOne(w => w.Author).WithMany(u => u.WorkItems).HasForeignKey(w => w.AuthorId);
-                // wiele do wiely
-                builder.HasMany(workitem => workitem.Tags).WithMany(tag => tag.WorkItems);
+                // wiele do wielu
+                builder.HasMany(workItem => workItem.Tags).WithMany(tag => tag.WorkItems);
             });
 
             modelBuilder.Entity<Comment>(builder =>
