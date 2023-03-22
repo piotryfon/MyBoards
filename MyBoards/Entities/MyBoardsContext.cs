@@ -9,6 +9,9 @@ namespace MyBoards.Entities
 
         }
         public DbSet<WorkItem> WorkItems { get; set; }
+        public DbSet<Issue> Issues { get; set; }
+        public DbSet<Epic> Epics { get; set; }
+        public DbSet<Task> Tasks { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<User> Users { get; set; }
@@ -29,6 +32,16 @@ namespace MyBoards.Entities
 
             //modelBuilder.Entity<WorkItem>()
             //    .Property(x => x.State).IsRequired();
+
+            modelBuilder.Entity<Epic>().Property(wi => wi.EndDate).HasPrecision(3);
+
+            modelBuilder.Entity<Issue>().Property(wi => wi.Efford).HasColumnType("decimal(5,2)");
+
+            modelBuilder.Entity<Task>()
+                .Property(wi => wi.Activity).HasMaxLength(200)
+                .HasPrecision(14, 2);
+            
+
             modelBuilder.Entity<WorkItemState>().Property(s => s.Value).IsRequired().HasMaxLength(50);
 
             modelBuilder.Entity<WorkItem>(builder =>
@@ -37,10 +50,6 @@ namespace MyBoards.Entities
 
                 builder.Property(wi => wi.IterationPath).HasColumnName("Iteration_Path");
                 builder.Property(wi => wi.Area).HasColumnType("varchar(200)");
-                builder.Property(wi => wi.Efford).HasColumnType("decimal(5,2)");
-                builder.Property(wi => wi.EndDate).HasPrecision(3); 
-                builder.Property(wi => wi.Activity).HasMaxLength(200);
-                builder.Property(wi => wi.RemaningWork).HasPrecision(14,2);
                 builder.Property(wi => wi.Priority).HasDefaultValue(1);
                 // workitem ma wiele kometarzy
                 builder.HasMany(prop => prop.Comments).WithOne(comment => comment.WorkItem).HasForeignKey(comment => comment.WorkItemId);
