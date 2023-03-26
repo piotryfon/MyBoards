@@ -38,7 +38,7 @@ namespace MyBoards.Entities
             modelBuilder.Entity<Issue>().Property(wi => wi.Efford).HasColumnType("decimal(5,2)");
 
             modelBuilder.Entity<Task>()
-                .Property(wi => wi.Activity).HasMaxLength(200)
+                .Property(wi => wi.RemaningWork).HasMaxLength(200)
                 .HasPrecision(14, 2);
             
 
