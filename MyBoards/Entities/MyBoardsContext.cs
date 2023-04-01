@@ -62,6 +62,7 @@ namespace MyBoards.Entities
             {
                 builder.Property(x => x.CreatedDate).HasDefaultValueSql("getutcdate()");
                 builder.Property(x => x.UpdatedDate).ValueGeneratedOnUpdate();  
+                builder.HasOne(c=>c.Author).WithMany(a => a.Comments).HasForeignKey(c => c.AuthorId).OnDelete(DeleteBehavior.NoAction); // zapobiega kaskadowemu usuwaniu
             });
 
 
